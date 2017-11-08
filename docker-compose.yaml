@@ -24,3 +24,20 @@ services:
       - ./www/:/var/www/html
     ports:
       - 8889:80
+
+# docker volume create --name pgdata-volume -d local
+  dbpostgres:
+    restart: always
+    image: postgres:10.0
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser
+      POSTGRES_DB: pgdb
+    volumes:
+      - pgdata-volume:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  pgdata-volume:
+    external: true
